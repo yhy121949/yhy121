@@ -28,7 +28,7 @@ def replace_data(function):
         else:
             assert False, "send_request方法缺少必要参数"
         log.info("------------------执行前置步骤------------------")
-        send_request.data = com_data.update_request(send_request)
+        com_data.update_request(send_request)
         res = function(*args, **kwargs)
         log.info("-----------------执行后置操作-------------------")
         com_data.excute_post(send_request)
@@ -63,10 +63,28 @@ class CommonData():
         :param send_request:
         :return:
         """
-        d = send_request.data
         self.excute_pre(send_request)
+        d = send_request.data
         d = self.Parser(d).keys_replace(send_request)
-        return json.loads(d)
+        send_request.data = json.loads(d)
+
+    def update_dict(self, old, new):
+        if isinstance(new, dict):
+            for k in new:
+                if k in old:
+                    if isinstance(new[k], dict) or isinstance(new[k], list):
+                        self.update_dict(old[k], new[k])
+                    else:
+                        old[k] = new[k]
+        elif isinstance(new, list) and isinstance(old, list):
+            length = len(new)
+            for i in range(length):
+                if isinstance(new[i], dict) or isinstance(new[i], list):
+                    self.update_dict(old[i], new[i])
+                else:
+                    old[i] = new[i]
+        else:
+            pass
 
     def excute_pre(self, send_request):
         """
@@ -77,6 +95,11 @@ class CommonData():
             for s in self.pre_process:
                 log.debug(s)
                 if isinstance(s, dict) or isinstance(s, list):
-                    pass
+                    d = send_request.data
+                    d = self.Parser(d).keys_replace(send_request)
+                    d = json.loads(d)
+                    self.update_dict(d, s)
+                    print(d)
+                    send_request.data = json.dumps(d, ensure_ascii=False, indent=2)
                 else:
                     self.Parser(s).keys_replace(send_request)

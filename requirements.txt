@@ -1,0 +1,7 @@
+allure-pytest==2.8.40
+configparser==5.0.2
+Faker==7.0.1
+jsonpath==0.82
+PyMySQL==1.0.2
+pytest==6.2.3
+requests==2.25.1

@@ -1,0 +1,6 @@
+env/
+logs/
+reports/
+.pytest_cache/
+.git/
+.idea/

@@ -28,6 +28,7 @@ class SendRequest():
         self.get_all_json_file()
         json_file = json_file.replace("\\", "/")
         json_file = self.get_file_key(json_file)
+        log.debug(json_file)
         if json_file not in self.json_data_files:
             log.error("json文件：{} 不存在".format(json_file))
             assert False, "json文件：{} 不存在".format(json_file)
@@ -126,6 +127,7 @@ class SendRequest():
         if len(self.json_data_files) == 0:
             json_data_dir = self.config.get_json_data()
             self.get_files(json_data_dir)
+        log.debug("全部文件路径为：{}".format(json.dumps(self.json_data_files, ensure_ascii=False, indent=2)))
 
     def get_file_key(self, file_path):
         file_path = file_path.replace("\\", "/")
@@ -137,7 +139,7 @@ class SendRequest():
             assert False, "json文件，必须存放于test_case/json_data文件夹及其子文件夹中"
         for i in range(length):
             if file_path_list[i] == "json_data":
-                if length - 1 == i:
+                if length - 1 > i:
                     file_path_list = file_path_list[i + 1:]
                 break
         return "/".join(file_path_list)
@@ -149,13 +151,13 @@ class SendRequest():
         :return:
         """
         files = os.listdir(file_path)
+
         for f in files:
-            file_path = os.path.join(file_path, f)
-            if os.path.isfile(file_path) and file_path.endswith(".json"):
-                if file_path in self.json_data_files:
-                    f = os.path.basename(os.path.dirname(file_path)) + "\\" + f
-                self.json_data_files[self.get_file_key(f)] = file_path
-            elif os.path.isdir(file_path):
-                self.get_files(file_path)
+            file = os.path.join(file_path, f)
+            if os.path.isfile(file) and file.endswith(".json"):
+                file_name = self.get_file_key(file)
+                self.json_data_files[file_name] = file
+            elif os.path.isdir(file):
+                self.get_files(file)
             else:
                 pass

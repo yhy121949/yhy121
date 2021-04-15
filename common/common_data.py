@@ -81,11 +81,12 @@ class CommonData():
         elif isinstance(new, list) and isinstance(old, list):
             length = len(new)
             for i in range(length):
-                if (isinstance(new[i], dict) and isinstance(old[i], dict)) or (
-                        isinstance(new[i], list) and isinstance(old[i], list)):
-                    self.update_dict(old[i], new[i])
-                elif i < len(old):
-                    old[i] = new[i]
+                if i < len(old):
+                    if (isinstance(new[i], dict) and isinstance(old[i], dict)) or (
+                            isinstance(new[i], list) and isinstance(old[i], list)):
+                        self.update_dict(old[i], new[i])
+                    else:
+                        old[i] = new[i]
                 else:
                     old.append(new[i])
         else:

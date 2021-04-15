@@ -28,7 +28,7 @@ class SendRequest():
         self.get_all_json_file()
         json_file = json_file.replace("\\", "/")
         json_file = self.get_file_key(json_file)
-        log.debug(json_file)
+        # log.debug(json_file)
         if json_file not in self.json_data_files:
             log.error("json文件：{} 不存在".format(json_file))
             assert False, "json文件：{} 不存在".format(json_file)

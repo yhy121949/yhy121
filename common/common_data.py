@@ -32,6 +32,7 @@ def replace_data(function):
         res = function(*args, **kwargs)
         log.info("-----------------执行后置操作-------------------")
         com_data.excute_post(send_request)
+        log.debug(send_request.local_var)
         return res
 
     return func
@@ -69,21 +70,26 @@ class CommonData():
         send_request.data = json.loads(d)
 
     def update_dict(self, old, new):
-        if isinstance(new, dict):
+        if isinstance(new, dict) and isinstance(old, dict):
             for k in new:
                 if k in old:
-                    if isinstance(new[k], dict) or isinstance(new[k], list):
+                    if (isinstance(new[k], dict) and isinstance(old[k], dict)) or (
+                            isinstance(new[k], list) and isinstance(old[k], list)):
                         self.update_dict(old[k], new[k])
                     else:
                         old[k] = new[k]
         elif isinstance(new, list) and isinstance(old, list):
             length = len(new)
             for i in range(length):
-                if isinstance(new[i], dict) or isinstance(new[i], list):
+                if (isinstance(new[i], dict) and isinstance(old[i], dict)) or (
+                        isinstance(new[i], list) and isinstance(old[i], list)):
                     self.update_dict(old[i], new[i])
-                else:
+                elif i < len(old):
                     old[i] = new[i]
+                else:
+                    old.append(new[i])
         else:
+
             pass
 
     def excute_pre(self, send_request):
@@ -99,7 +105,6 @@ class CommonData():
                     d = self.Parser(d).keys_replace(send_request)
                     d = json.loads(d)
                     self.update_dict(d, s)
-                    print(d)
                     send_request.data = json.dumps(d, ensure_ascii=False, indent=2)
                 else:
                     self.Parser(s).keys_replace(send_request)

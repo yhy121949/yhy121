@@ -46,7 +46,7 @@ class Parser(object):
             if string[i] == "$":
                 if i == 0 or i == length - 1:
                     flag += 1
-                elif string[i - 1] != ")" or string[i + 1].isupper():
+                elif string[i - 1] == ")" or string[i + 1].isupper():
                     flag += 1
                 else:
                     pass
@@ -86,6 +86,7 @@ class Parser(object):
                 else:
                     if s[i - 1] == ")":
                         keys.append(s[start:i])
+                        flag = False
 
         return keys
 
@@ -98,7 +99,7 @@ class Parser(object):
         keys, ks = self.get_nesting_keys()
         s = self.string
         for k in ks:
-            s = s.replace("$" + k + "$", "")
+            s = s.replace("$" + k + "$", "", 1)
         res = self.get_single_key(s)
         if len(res) != 0:
             keys.append(res)
@@ -110,7 +111,7 @@ class Parser(object):
         :param key:关键字
         :return:
         """
-        r = re.compile(r"^(.*)\(")
+        r = re.compile(r"^(.*?)\(")
         res = r.findall(key)
         if len(res) != 0 and res[0] != "":
             return keys[res[0].upper()]

@@ -46,7 +46,6 @@ def get_var(send_request, var_name):
     local_var = send_request.local_var
     value = None
     if name in local_var:
-        print(name)
         value = local_var[name]
         if path:
             path = path.replace("'", "")

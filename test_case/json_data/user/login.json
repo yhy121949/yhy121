@@ -1,0 +1,21 @@
+{
+  "feature": "流程用例",
+  "story": "新用户下单流程",
+  "title": "登录",
+  "service": "mall",
+  "method": "POST",
+  "url": "/api/v1/user/login",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "loginName": "$GET_VAR(phone)$",
+    "passwordMd5": "$MD5(123456)$"
+  },
+  "files": {
+  }
+}
+
+
+
+

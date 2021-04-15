@@ -70,6 +70,12 @@ class CommonData():
         send_request.data = json.loads(d)
 
     def update_dict(self, old, new):
+        """
+        新字典中的数据替换旧字典
+        :param old: 旧字典
+        :param new: 新字典
+        :return:
+        """
         if isinstance(new, dict) and isinstance(old, dict):
             for k in new:
                 if k in old:

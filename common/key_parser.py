@@ -124,7 +124,7 @@ class Parser(object):
         :return:
         """
         r = re.compile(r"\((.*)\)")
-        res = r.findall(key)
+        res = r.findall(key.replace(" ", ""))
         if len(res) != 0 and res[0] != "":
             return res[0].split(",")
         return None

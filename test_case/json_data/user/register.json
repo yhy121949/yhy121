@@ -1,0 +1,21 @@
+{
+  "feature": "流程用例",
+  "story": "新用户下单流程",
+  "title": "注册一个用户",
+  "service": "mall",
+  "method": "POST",
+  "url": "/api/v1/user/register",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "loginName": "15896548569",
+    "password": "123456"
+  },
+  "files": {
+  }
+}
+
+
+
+

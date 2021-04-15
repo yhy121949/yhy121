@@ -72,7 +72,10 @@ class ParseConfig():
         if app not in self.__get_sections():
             log.error("db配置：{} 在config.ini文件中不存在".format(app))
             return None
-        return self.__get_items(app)
+        db = self.__get_items(app)
+        if "port" in db and isinstance(db["port"], str):
+            db["port"] = int(db["port"])
+        return db
 
     def get_config(self, section, option):
         if section not in self.__get_sections():
@@ -95,4 +98,4 @@ class ParseConfig():
 
 
 if __name__ == '__main__':
-    print(ParseConfig().get_json_data())
+    print(ParseConfig().get_db_config("app"))

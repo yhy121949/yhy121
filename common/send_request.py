@@ -17,7 +17,6 @@ from common.base_request import BaseRequest
 from common.base_response import BaseResponse
 from common.common_data import replace_data
 from tools import log
-from tools.config_parser import ParseConfig
 
 
 class SendRequest():
@@ -37,6 +36,11 @@ class SendRequest():
     def clear(self):
         self.request = None
         self.response = None
+
+    @property
+    def config(self):
+        from tools.config_parser import ParseConfig
+        return ParseConfig()
 
     @replace_data
     def send_request(self, pre_process, post_process):
@@ -120,7 +124,7 @@ class SendRequest():
         :return:
         """
         if len(self.json_data_files) == 0:
-            json_data_dir = ParseConfig().get_json_data()
+            json_data_dir = self.config.get_json_data()
             self.get_files(json_data_dir)
 
     def get_file_key(self, file_path):

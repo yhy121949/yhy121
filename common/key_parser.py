@@ -124,9 +124,11 @@ class Parser(object):
         :return:
         """
         r = re.compile(r"\((.*)\)")
-        res = r.findall(key.replace(" ", ""))
+        res = r.findall(key)
         if len(res) != 0 and res[0] != "":
-            return res[0].split(",")
+            res = res[0].split(",")
+            res = [r.strip() for r in res]
+            return res
         return None
 
     def excute_key(self, send_request, key):

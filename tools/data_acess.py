@@ -75,7 +75,11 @@ def json_extractor(send_request, var_name, json_path, match_no="0", default=None
         if default:
             local_var[var_name] = default
         return
+    json_path = json_path.replace("'", '"')
+    json_path = json_path.replace('["', '.')
+    json_path = json_path.replace('"]', '')
     res = jsonpath.jsonpath(data, json_path)
+    print(res)
     if res:
         res = res[int(match_no) - 1] if match_no != "0" else random.choice(res)
         log.debug("提取结果为：{}".format(res))

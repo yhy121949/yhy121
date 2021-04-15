@@ -56,6 +56,8 @@ class SendRequest():
         log.info("--------------获取请求数据-------------------")
         requst_data = self.__get_request_data()
         log.info("--------------发送请求----------------------")
+        if "data" in requst_data:
+            requst_data["data"] = requst_data["data"].encode("utf-8") if requst_data["data"] else None
         response = self.__send_request(requst_data)
         log.debug("响应状态码为：{}".format(response.status_code))
         self.response = BaseResponse(response)

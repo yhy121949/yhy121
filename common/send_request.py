@@ -139,7 +139,7 @@ class SendRequest():
         if length == 1:
             return file_path_list[0]
         if "json_data" not in file_path:
-            assert False, "json文件，必须存放于test_case/json_data文件夹及其子文件夹中"
+            return "/".join(file_path_list)
         for i in range(length):
             if file_path_list[i] == "json_data":
                 if length - 1 > i:

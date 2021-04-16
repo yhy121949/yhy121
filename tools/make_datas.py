@@ -180,7 +180,7 @@ def get_string(send_request, content, length):
     :return:
     """
     if not isinstance(length, int):
-        start = int(length.strip())
+        length = int(length.strip())
     return "".join(random.choices(content, k=length))
 
 

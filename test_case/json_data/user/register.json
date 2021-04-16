@@ -9,7 +9,7 @@
     "Content-Type": "application/json"
   },
   "body": {
-    "loginName": "15896548569",
+    "loginName": "",
     "password": "123456"
   },
   "files": {

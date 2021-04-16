@@ -94,7 +94,7 @@ class ParseConfig():
         return self.root_path
 
     def get_json_data(self):
-        return os.path.join(self.get_root_path(), 'test_case\json_data')
+        return os.path.join(self.get_root_path(), 'test_case/json_data')
 
 
 if __name__ == '__main__':

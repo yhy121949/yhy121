@@ -9,11 +9,14 @@
     "Content-Type": "application/json"
   },
   "body": {
-    "loginName": "$GET_VAR(phone)$",
+    "loginName": "",
     "passwordMd5": "$MD5(123456)$"
   },
   "files": {
-  }
+  },
+  "post_process": [
+    "$JSON_EXTRACTOR(token,$['data'],0)$"
+  ]
 }
 
 

@@ -21,6 +21,8 @@ def assert_contains(send_request, expect):
     :return:
     """
     from common.key_parser import Parser
+    if not hasattr(send_request, "response"):
+        return
     expect = Parser(expect).keys_replace(send_request)
     body = send_request.response.body
     allure.attach("预期结果：{}\n响应正文：{}".format(expect, body), "----------响应正文断言，包含--------------",
@@ -37,8 +39,13 @@ def assert_json(send_request, json_path, expect):
     :return:
     """
     from common.key_parser import Parser
+    if not hasattr(send_request, "response"):
+        return
     expect = Parser(expect).keys_replace(send_request)
     data = json.loads(send_request.response.body)
+    json_path = json_path.replace("'", '"')
+    json_path = json_path.replace('["', '.')
+    json_path = json_path.replace('"]', '')
     res = jsonpath.jsonpath(data, json_path)
     allure.attach("预期结果：{}\n 实际结果：{}".format(
         expect, res), "----------json断言，等于--------------", allure.attachment_type.TEXT)

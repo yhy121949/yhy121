@@ -32,7 +32,7 @@ def replace_data(function):
         res = function(*args, **kwargs)
         log.info("-----------------执行后置操作-------------------")
         com_data.excute_post(send_request)
-        log.debug(send_request.local_var)
+        log.debug("全部变量：{}".format(send_request.local_var))
         return res
 
     return func
@@ -53,7 +53,12 @@ class CommonData():
         :return:
         """
         from tools import log
-        if self.post_process:
+
+        data = send_request.data
+        json_data = json.loads(data)
+        post_process = json_data.get("post_process", [])
+        if isinstance(self.post_process, list):
+            self.post_process.extend(post_process)
             for s in self.post_process:
                 log.debug(s)
                 self.Parser(s).keys_replace(send_request)
@@ -67,7 +72,7 @@ class CommonData():
         self.excute_pre(send_request)
         d = send_request.data
         d = self.Parser(d).keys_replace(send_request)
-        send_request.data = json.loads(d)
+        send_request.data = d
 
     def update_dict(self, old, new):
         """
@@ -98,6 +103,22 @@ class CommonData():
         else:
 
             pass
+
+    # def get_json_pre_or_post(self, send_request, key):
+    #     """
+    #     字符串解析的形式，获取json文件中pre_process或者post_process的值
+    #     :param send_request:
+    #     :param key: "pre_process" or "post_process"
+    #     :return:
+    #     """
+    #     data = send_request.data
+    #     if key not in ["pre_process", "post_process"]:
+    #         return []
+    #     index = data.find(key)
+    #     if index == -1:
+    #         return []
+    #     data = data[index:]
+    #     data = data[data.find(":") + 1:]
 
     def excute_pre(self, send_request):
         """

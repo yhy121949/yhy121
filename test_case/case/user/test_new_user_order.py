@@ -34,7 +34,7 @@ def test_login():
     ]
     # 收到响应后的后置操作
     post_process = [
-        '$JSON_EXTRACTOR(token,$["data"] ,0)$'
+
     ]
     SendRequest("test_case/json_data/user/login.json").send_request(post_process=post_process,
                                                                     pre_process=pre_process)

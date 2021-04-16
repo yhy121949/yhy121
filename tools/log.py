@@ -21,7 +21,7 @@ logger.setLevel(level=logging.DEBUG)
 root_path = os.path.join(os.path.dirname(os.path.abspath(__file__)), "../logs/")
 if not os.path.exists(root_path):
     os.makedirs(root_path)
-handler = TimedRotatingFileHandler(root_path + 'info.log', when='d', interval=2, backupCount=30, encoding='utf-8')
+handler = TimedRotatingFileHandler(root_path + 'info.log', when='d', interval=1, backupCount=30, encoding='utf-8')
 handler.setLevel(logging.DEBUG)
 formatter = logging.Formatter('%(asctime)s - %(name)s - %(levelname)s - %(message)s')
 handler.setFormatter(formatter)

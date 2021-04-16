@@ -50,7 +50,7 @@ def get_var(send_request, var_name):
         if path:
             path = path.replace("'", "")
             path = path.replace('"', "")
-            r = re.compile("\[(.*?)\]")
+            r = re.compile(r"\[(.*?)\]")
             res = r.findall(path)
             for k in res:
                 value = value[k if not k.isdigit() else int(k)]
@@ -68,7 +68,8 @@ def json_extractor(send_request, var_name, json_path, match_no="0", default=None
     :param default: 默认值
     :return:
     """
-
+    if not hasattr(send_request, "response"):
+        return
     local_var = send_request.local_var
     data = json.loads(send_request.response.body)
     if len(data) == 0:
@@ -84,3 +85,5 @@ def json_extractor(send_request, var_name, json_path, match_no="0", default=None
         res = res[int(match_no) - 1] if match_no != "0" else random.choice(res)
         log.debug("提取结果为：{}".format(res))
         local_var[var_name] = res
+    elif default:
+        local_var[var_name] = default

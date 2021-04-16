@@ -25,7 +25,8 @@ class SendRequest():
     local_var = {}
 
     def __init__(self, json_file):
-        self.get_all_json_file()
+        if len(self.json_data_files) == 0:
+            self.get_all_json_file()
         json_file = json_file.replace("\\", "/")
         json_file = self.get_file_key(json_file)
         # log.debug(json_file)

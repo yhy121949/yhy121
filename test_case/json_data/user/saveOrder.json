@@ -1,0 +1,24 @@
+{
+  "feature": "流程用例",
+  "story": "新用户下单流程",
+  "title": "生成订单",
+  "service": "mall",
+  "method": "post",
+  "url": "/api/v1/saveOrder",
+  "headers": {
+    "Content-Type": "application/json",
+    "token": "$GET_VAR(token)$"
+  },
+  "body":{
+  "addressId": "$GET_VAR(addressId)$",
+  "cartItemIds": [
+    "$GET_VAR(cartItemId)$"
+  ]
+},
+  "files": {
+  }
+}
+
+
+
+

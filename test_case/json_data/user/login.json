@@ -1,0 +1,21 @@
+{
+  "feature": "流程用例",
+  "story": "用户登录",
+  "title": "用户登录",
+  "service": "mall",
+  "method": "POST",
+  "url": "/api/v1/user/login",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "loginName": "13555026237",
+    "passwordMd5": "$MD5(123456)$"
+  },
+  "files": {
+  }
+}
+
+
+
+

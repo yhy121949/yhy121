@@ -1,0 +1,22 @@
+{
+  "feature": "流程用例",
+  "story": "新用户下单流程",
+  "title": "添加商品到购物车接口",
+  "service": "mall",
+  "method": "POST",
+  "url": "/api/v1/shop-cart",
+  "headers": {
+    "Content-Type": "application/json",
+    "token": "$GET_VAR(token)$"
+  },
+  "body": {
+    "goodsCount": 2,
+  "goodsId": "$GET_VAR(goodsId)$"
+  },
+  "files": {
+  }
+}
+
+
+
+

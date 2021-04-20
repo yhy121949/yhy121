@@ -1,4 +1,4 @@
-# !/usr/bin/env python
+    # !/usr/bin/env python
 # -*-coding:utf-8 -*-
 
 """
@@ -27,6 +27,12 @@ def replace_data(function):
             com_data.post_process = args[2]
         else:
             assert False, "send_request方法缺少必要参数"
+        pre_process = json.loads(com_data.get_json_pre_or_post(send_request, "pre_process"))
+        post_process = json.loads(com_data.get_json_pre_or_post(send_request, "post_process"))
+        post_process.extend(com_data.post_process if isinstance(com_data.post_process, list) else [])
+        pre_process.extend(com_data.pre_process if isinstance(com_data.pre_process, list) else [])
+        com_data.post_process = post_process
+        com_data.pre_process = pre_process
         log.info("------------------执行前置步骤------------------")
         com_data.update_request(send_request)
         res = function(*args, **kwargs)
@@ -55,10 +61,7 @@ class CommonData():
         from tools import log
 
         data = send_request.data
-        json_data = json.loads(data)
-        post_process = json_data.get("post_process", [])
         if isinstance(self.post_process, list):
-            self.post_process.extend(post_process)
             for s in self.post_process:
                 log.debug(s)
                 self.Parser(s).keys_replace(send_request)
@@ -104,21 +107,41 @@ class CommonData():
 
             pass
 
-    # def get_json_pre_or_post(self, send_request, key):
-    #     """
-    #     字符串解析的形式，获取json文件中pre_process或者post_process的值
-    #     :param send_request:
-    #     :param key: "pre_process" or "post_process"
-    #     :return:
-    #     """
-    #     data = send_request.data
-    #     if key not in ["pre_process", "post_process"]:
-    #         return []
-    #     index = data.find(key)
-    #     if index == -1:
-    #         return []
-    #     data = data[index:]
-    #     data = data[data.find(":") + 1:]
+    def get_json_pre_or_post(self, send_request, key):
+        """
+        字符串解析的形式，获取json文件中pre_process或者post_process的值
+        :param send_request:
+        :param key: "pre_process" or "post_process"
+        :return:
+        """
+        data = send_request.data
+        if key not in ["pre_process", "post_process"]:
+            return '[]'
+        index = data.find(key)
+        if index == -1:
+            return '[]'
+        data = data[index:]
+        data = data[data.find(":") + 1:]
+        start = 0
+        flag = False
+        k = 0
+        for i in range(len(data)):
+            if k == 0 and data[i] == ",":
+                return '[]'
+            if data[i] == "[":
+                if k == 0:
+                    flag = True
+                    start = i
+                k -= 1
+            elif data[i] == ']':
+                k += 1
+            else:
+                pass
+            if flag and k == 0:
+                data = data[start:i + 1]
+                send_request.data = send_request.data.replace(data, "[]")
+                return data
+        return '[]'
 
     def excute_pre(self, send_request):
         """

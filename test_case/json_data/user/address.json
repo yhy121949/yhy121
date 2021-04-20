@@ -1,0 +1,19 @@
+{
+  "feature": "流程用例",
+  "story": "新用户下单流程",
+  "title": "收货地址列表",
+  "service": "mall",
+  "method": "get",
+  "url": "/api/v1/address",
+  "headers": {
+    "Content-Type": "application/json",
+    "token": "$GET_VAR(token)$"
+  },
+  "body": null,
+  "files": {
+  }
+}
+
+
+
+

@@ -1,0 +1,31 @@
+{
+  "feature": "流程用例",
+  "story": "新用户下单流程",
+  "title": "注册一个用户",
+  "service": "mall",
+  "method": "POST",
+  "url": "/api/v1/user/register",
+  "headers": {
+    "Content-Type": "application/json"
+  },
+  "body": {
+    "loginName": "$GET_VAR(phone)$",
+    "password": "123456"
+  },
+  "files": {
+  },
+  "post_process": [
+    "$ASSERT_JSON($['resultCode'],200)$"
+  ],
+  "pre_process": [
+    "$SET_VAR(phone,$PHONE()$)$",
+    "$MYSQL(data,mall,SELECT * FROM tb_newbee_mall_user;)$"
+  ]
+}
+
+
+
+
+
+
+

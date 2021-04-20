@@ -1,0 +1,27 @@
+{
+  "feature": "流程用例",
+  "story": "新用户下单流程",
+  "title": "添加商品到购物车接口",
+  "service": "mall",
+  "method": "POST",
+  "url": "/api/v1/address",
+  "headers": {
+    "Content-Type": "application/json",
+    "token": "$GET_VAR(token)$"
+  },
+  "body": {
+    "cityName": "上海市",
+    "defaultFlag": 0,
+    "detailAddress": "江月路999",
+    "provinceName": "上海",
+    "regionName": "闵行",
+    "userName": "彬",
+    "userPhone": "17621428409"
+  },
+  "files": {
+  }
+}
+
+
+
+

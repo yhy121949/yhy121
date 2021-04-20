@@ -1,0 +1,19 @@
+{
+  "feature": "流程用例",
+  "story": "新用户下单流程",
+  "title": "模拟支付",
+  "service": "mall",
+  "method": "get",
+  "url": "/api/v1/paySuccess?orderNo=$GET_VAR(orderNo)$&payType=1",
+  "headers": {
+    "Content-Type": "application/json",
+    "token": "$GET_VAR(token)$"
+  },
+  "body":null,
+  "files": {
+  }
+}
+
+
+
+
